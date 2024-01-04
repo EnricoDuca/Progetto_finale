@@ -51,11 +51,11 @@ A questo punto vengono consigliati diversi parametri di prova per la visualizzaz
 
 a) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa una lamina d'oro
 
-    lamina_metallo = Lamina_metallo(posizione = np.array([-2, 2]), materiale = "oro", larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 0)
+    lamina_metallo1 = Lamina_metallo(posizione = np.array([-2, 2]), materiale = "oro", larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 0)
 
     prova1 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.005,
                                     posizione_schermo_sensibile = 5,  dimensioni_pixel = 0.00025,
-                                    lamine_metallo = [lamina_metallo], n_particelle = 20000, condizione_b = 0.00000001, dimensione_schermo = 0.05)
+                                    lamine_metallo = [lamina_metallo1], n_particelle = 20000, condizione_b = 0.00000001, dimensione_schermo = 0.05)
     prova1.visualizza_apparato()
     prova1.simulazione()
 
