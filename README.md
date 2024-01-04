@@ -14,7 +14,7 @@ Nel codice si definisce inizialmente la classe  "Lamina_metallo" che permette di
 
 Abbiamo citato il nucleo che, come già specificato prima, si trova al centro della lamina di metallo. Verrà considerato come parametro di impatto la differenza fra la posizione lungo l'asse x della particella quando si trova all'altezza della lamina e quella del nucleo.
 
-A questo punto si è definita la classe "esperimento_Rutherford", come attributi di ingresso ha:
+A questo punto si è definita la classe "esperimento_Rutherford" che, come attributi di ingresso ha:
 
 - l'energia cinetica del fascio di particelle alpha che vengono inviate contro la lamina;
 - la distanza del collimatore, il foro collimatore viene posizionato lungo l'asse y: "self.posizione_collimatore = np.array([0, distanza_collimatore])";
