@@ -49,35 +49,35 @@ A questo punto vengono consigliati diversi parametri di prova per la visualizzaz
 
 a) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa una lamina d'oro
 
-lamina_metallo = Lamina_metallo(posizione = np.array([-2, 2]), materiale = "oro", larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 0)
+    lamina_metallo = Lamina_metallo(posizione = np.array([-2, 2]), materiale = "oro", larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 0)
 
-prova1 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.005,
-                                posizione_schermo_sensibile = 5,  dimensioni_pixel = 0.00025,
-                                lamine_metallo = [lamina_metallo], n_particelle = 20000, condizione_b = 0.00000001, dimensione_schermo = 0.05)
-prova1.visualizza_apparato()
-prova1.simulazione()
+    prova1 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.005,
+                                    posizione_schermo_sensibile = 5,  dimensioni_pixel = 0.00025,
+                                    lamine_metallo = [lamina_metallo], n_particelle = 20000, condizione_b = 0.00000001, dimensione_schermo = 0.05)
+    prova1.visualizza_apparato()
+    prova1.simulazione()
 
 b) Particella alpha dal decadimento di 214Po (E = 7.7MeV) che attraversa una lamina d'oro
-Uguale al caso di prima però inserire nell'attributo energia 7.7 al posto di 5.5
+    Uguale al caso di prima però inserire nell'attributo energia 7.7 al posto di 5.5
 
 c) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa due lamine d'oro poste ad 1cm di distanza
 
-lamina_metallo2 = Lamina_metallo(posizione = np.array([-1.8, 1.8]),materiale = "oro",  larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 1)
-lamina_metallo3 = Lamina_metallo(posizione = np.array([-3, 3]),materiale = "oro",  larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 1)
+    lamina_metallo2 = Lamina_metallo(posizione = np.array([-1.8, 1.8]),materiale = "oro",  larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 1)
+    lamina_metallo3 = Lamina_metallo(posizione = np.array([-3, 3]),materiale = "oro",  larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 1)
 
-prova3 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.005,
-                                posizione_schermo_sensibile = 5, dimensioni_pixel = 0.00025,
-                                lamine_metallo = [lamina_metallo2,lamina_metallo3], n_particelle = 20000, condizione_b = 0.00001, dimensione_schermo = 0.1)
-prova3.visualizza_apparato()
-prova3.simulazione()
+    prova3 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.005,
+                                    posizione_schermo_sensibile = 5, dimensioni_pixel = 0.00025,
+                                    lamine_metallo = [lamina_metallo2,lamina_metallo3], n_particelle = 20000, condizione_b = 0.00001, dimensione_schermo = 0.1)
+    prova3.visualizza_apparato()
+    prova3.simulazione()
 
 d) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa tre lamine d'oro poste ad 1mm di distanza
 
-lamina_metallo4 = Lamina_metallo(posizione = np.array([-2, 2]), materiale = "oro", larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 0.1)
-lamina_metallo5 = Lamina_metallo(posizione = np.array([-2.3, 2.3]), materiale = "oro", larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 0.1)
-lamina_metallo6 = Lamina_metallo(posizione = np.array([-2.6, 2.6]), materiale = "oro", larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 0.1)
+    lamina_metallo4 = Lamina_metallo(posizione = np.array([-2, 2]), materiale = "oro", larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 0.1)
+    lamina_metallo5 = Lamina_metallo(posizione = np.array([-2.3, 2.3]), materiale = "oro", larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 0.1)
+    lamina_metallo6 = Lamina_metallo(posizione = np.array([-2.6, 2.6]), materiale = "oro", larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 0.1)
 
-Successivamente è uguale al punto c) solo che "lamine_metallo = [lamina_metallo4,lamina_metallo5,lamina_metallo6]"
+    Successivamente è uguale al punto c) solo che "lamine_metallo = [lamina_metallo4,lamina_metallo5,lamina_metallo6]"
 
 
 Quanto fatto per i punti precedenti può essere ripetuto con un minore numero di particelle soprattutto per i punti c) e d), regolando chiaramente anche le dimensioni dello schermo di pixel e l'attributo "condizione_b" (perchè inviando meno particelle è meno probabile che esse vengano scatterate con valori sulla condizione di b molto piccoli).
