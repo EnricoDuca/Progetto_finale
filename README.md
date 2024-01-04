@@ -18,7 +18,7 @@ A questo punto si è definita la classe "esperimento_Rutherford" che, come attri
 
 - l'energia cinetica del fascio di particelle alpha che vengono inviate contro la lamina;
 - la distanza del collimatore: il foro collimatore viene posizionato lungo l'asse y ("self.posizione_collimatore = np.array([0, distanza_collimatore])");
-- la dimensione del collimatore: si intende il diametro del foro collimatore (si consigliano dimensioni piccole per avere un fascio più collimato, in quanto le particella alpha vengono poste in maniera randomatica sulla circonferenza del foro);
+- la dimensione del collimatore: si intende il diametro del foro collimatore (si consigliano dimensioni piccole per avere un fascio più collimato, in quanto le particellaealpha vengono poste in maniera randomatica sulla circonferenza del foro);
 - la posizione dello schermo sensibile, dove con schermo sensibile si intende la mappa di pixel;
 - la dimensione dei pixel;
 - le lamine di metallo utilizzate per l'esperimento voluto, bisogna richiamare una o più lamine create dalla classe precedente, ad esempio: "lamine_metallo = [lamina_metallo1,lamina_metallo2]";
