@@ -5,6 +5,8 @@ La richiesta del progetto era quella di sviluppare in Python una simulazione Mon
 
 Innanzitutto bisogna specificare che ciò che è stato fatto è un'approssimazione dell'esperienza reale, in quanto si sono supposte considerazioni e condizioni per semplificare il tutto.
 
+Come detto precedentemente, il codice stesso è un'approssimazione dell'esperimento di Rutherford incentrato soprattutto sul numero possibile di lamine, in modo particolare fino a 3. Alcune parti sono pensate per una possibile implementazione, se necessaria, a casi più generali anche se qui non richiesti.
+
 Nel codice si definisce inizialmente la classe  "Lamina_metallo" che permette di creare l'oggetto lamina con diversi attributi di input, in ordine: 
 - la posizione che deve essere del tipo np.array([x, y]) e, come già detto precedentemente, dato che è un'approssimazione bisogna stare attenti a definire una posizione che permetta al nucleo (che si trova al centro della lamina) di collocarsi lungo l'asse y ( un esempio potrebbe essere: posizione = np.array([-2,2]));
 - il materiale di cui è composta la lamina da passsare come stringa (ad esempio materiale = "oro");
@@ -85,3 +87,4 @@ Quanto fatto per i punti precedenti può essere ripetuto con un minore numero di
 
 Da notare che i valori sopra scelti per l'attributo "condizione_b" nei punti a) e b) sono quelli che meglio approssimano la distribuzione attesa per 20000 particelle, ovvero l'ordine delle decine di particelle vengono scatterate.
 Per i punti c) e d) si è abbassato questo valore in quanto non veniva scatterata nessuna particella nelle lamine successive in quanto si erano già allontanate sufficientemente da non rispettare più la condizione di scattering.
+
