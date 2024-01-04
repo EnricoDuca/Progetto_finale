@@ -24,7 +24,7 @@ A questo punto si è definita la classe "esperimento_Rutherford" che, come attri
 - le lamine di metallo utilizzate per l'esperimento voluto, bisogna richiamare una o più lamine create dalla classe precedente, ad esempio: "lamine_metallo = [lamina_metallo1,lamina_metallo2]";
 - il numero di particelle alpha del fascio incidente;
 - una condizione sul parametro di impatto (b), tale condizione verrà usata per decidere se una particella che arriva alla stessa altezza del nucleo viene deviata o meno: "if b <= self.condizione_b";
-- la dimensione dello schermo sensibile di pixel, è importante per una coretta visualizzazione delle particelle deviate che questo valore sia scelto correttamente.
+- la dimensione dello schermo sensibile di pixel: è importante per una corretta visualizzazione delle particelle scatterate che questo valore sia scelto correttamente.
 
 Chiaramente per la buona riuscita della simulazione il foro collimatore deve essere posizionato prima delle lamine di metallo che, a loro volta, dovranno essere posizonate prima dello schermo sensibile di pixel.
 
