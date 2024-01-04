@@ -17,7 +17,7 @@ Abbiamo citato il nucleo che, come già specificato prima, si trova al centro de
 A questo punto si è definita la classe "esperimento_Rutherford" che, come attributi di ingresso ha:
 
 - l'energia cinetica del fascio di particelle alpha che vengono inviate contro la lamina;
-- la distanza del collimatore, il foro collimatore viene posizionato lungo l'asse y: "self.posizione_collimatore = np.array([0, distanza_collimatore])";
+- la distanza del collimatore: il foro collimatore viene posizionato lungo l'asse y ("self.posizione_collimatore = np.array([0, distanza_collimatore])");
 - la dimensione del collimatore, dove con dimensione si intende il diametro del foro collimatore (si consigliano dimensioni piccole per avere un fascio più collimato, in quanto le particella alpha vengono poste in maniera randomatica sulla circonferenza del foro);
 - la posizione dello schermo sensibile, dove con schermo sensibile si intende la mappa di pixel;
 - la dimensione dei pixel;
