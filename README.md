@@ -58,6 +58,7 @@ a) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa una lam
     prova1.simulazione()
 
 b) Particella alpha dal decadimento di 214Po (E = 7.7MeV) che attraversa una lamina d'oro
+
     Uguale al caso di prima però inserire nell'attributo energia 7.7 al posto di 5.5
 
 c) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa due lamine d'oro poste ad 1cm di distanza
