@@ -35,7 +35,7 @@ All'interno della seconda classe si sono definiti anche alcuni moduli:
 
 - "visualizza_apparato" che, permette di visualizzare attraverso "subplots": il foro collimatore con annesso raggio, una o più lamine di  metallo con il loro nucleo centrale ed infine lo schermo sensibile. Tutto ciò viene mostrato nelle posizioni scelte dall'utente negli attributi di input.
 
-Dato che la maggior parte delle particelle passa indisturbata, le tracce (sopratutto se viene scelto un elevato numero di particelle) risultano molto concentrate intorno all'origine anche se con qualche particella deviata di parecchio.
+Dato che la maggior parte delle particelle passa indisturbata le tracce risultano molto concentrate intorno all'origine (sopratutto se viene scelto un elevato numero di particelle), anche se qualche particella viene comunque scatterata.
 Se invece si sceglie una condizione per il parametro di impatto che permetta la deviazione di più particelle e si considera un numero ridotto di particelle allora si possono notare molto meglio le tracce delle particelle alpha e come vengono deviate quando incontrano il nucleo centrale.
 
 
