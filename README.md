@@ -8,7 +8,7 @@ Innanzitutto bisogna specificare che ciò che è stato fatto è un'approssimazio
 Come detto precedentemente, il codice stesso è un'approssimazione dell'esperimento di Rutherford incentrato soprattutto sul numero possibile di lamine, in modo particolare fino a 3. Alcune parti sono pensate per una possibile implementazione e modifica, se necessarie, a casi più generali.
 
 Nel codice si definisce inizialmente la classe  "Lamina_metallo" che permette di creare l'oggetto lamina con diversi attributi di input, in ordine: 
-- la posizione che deve essere del tipo np.array([x, y]) e, come già detto precedentemente, dato che è un'approssimazione bisogna stare attenti a definire una posizione che permetta al nucleo, che si trova al centro della lamina, di collocarsi lungo l'asse y ( un esempio potrebbe essere: posizione = np.array([-2,2]));
+- la posizione che deve essere del tipo np.array([x, y]) e, come già detto precedentemente, dato che è un'approssimazione bisogna stare attenti a definire una posizione che permetta al nucleo che, si trova al centro della lamina, di collocarsi lungo l'asse y ( un esempio potrebbe essere: posizione = np.array([-2,2]));
 - il materiale di cui è composta la lamina da passsare come stringa (ad esempio materiale = "oro");
 - la larghezza della lamina, che poi andrà a definire la posizione del nucleo;
 - il numero atomico del materiale di cui è composta la lamina;
