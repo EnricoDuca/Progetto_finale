@@ -5,10 +5,11 @@ La richiesta del progetto era quella di sviluppare in Python una simulazione Mon
 
 Innanzitutto bisogna specificare che ciò che è stato fatto è un'approssimazione dell'esperienza reale, in quanto si sono supposte considerazioni e condizioni per semplificare il tutto.
 
-Come detto precedentemente, il codice stesso è un'approssimazione dell'esperimento di Rutherford incentrato soprattutto sul numero possibile di lamine, in modo particolare fino a 3. Alcune parti sono state pensate per una possibile implementazione e modifica, se necessarie, a casi più generali, ad esempio non è stata presa in considerazione la possibilità che una particella venga totalmente riflessa e torni indietro.
+Come detto precedentemente, il codice una simulazione approssimata dell'esperimento di Rutherford incentrato soprattutto sul numero possibile di lamine, in modo particolare fino a 3. Alcune parti sono state pensate per una possibile implementazione e modifica, se necessarie, a casi più generali.
 
-Nel codice si definisce inizialmente la classe  "Lamina_metallo" che permette di creare l'oggetto lamina con diversi attributi di input, in ordine: 
-- la posizione che deve essere del tipo np.array([x, y]) e, come già detto precedentemente, dato che è un'approssimazione bisogna stare attenti a definire una posizione che permetta al nucleo che, si trova al centro della lamina, di collocarsi lungo l'asse y ( un esempio potrebbe essere: posizione = np.array([-2,2]));
+Nel codice si definisce inizialmente la classe  "Lamina_metallo" che permette di creare l'oggetto lamina con diversi attributi di input, in ordine:
+
+- la posizione che deve essere del tipo np.array([x, y]) e, come già detto precedentemente, dato che si tratta di una approssimazione bisogna stare attenti a definire una posizione che permetta al nucleo che, si trova al centro della lamina, di collocarsi lungo l'asse y (un esempio potrebbe essere: posizione = np.array([-2,2]));
 - il materiale di cui è composta la lamina da passsare come stringa (ad esempio materiale = "oro");
 - la larghezza della lamina, che poi andrà a definire la posizione del nucleo;
 - il numero atomico del materiale di cui è composta la lamina;
@@ -19,11 +20,11 @@ Abbiamo citato il nucleo che, come già specificato prima, si trova al centro de
 A questo punto si è definita la classe "esperimento_Rutherford" che, come attributi di ingresso ha:
 
 - l'energia cinetica del fascio di particelle alpha che vengono inviate contro la lamina;
-- la distanza del collimatore: il foro collimatore viene posizionato lungo l'asse y ("self.posizione_collimatore = np.array([0, distanza_collimatore])");
+- la distanza del collimatore, il foro collimatore viene posizionato lungo l'asse y ("self.posizione_collimatore = np.array([0, distanza_collimatore])");
 - la dimensione del collimatore: si intende il diametro del foro collimatore (si consigliano dimensioni piccole per avere un fascio più collimato, in quanto le particelle alpha vengono poste in maniera randomatica sulla circonferenza del foro);
 - la posizione dello schermo sensibile, dove con schermo sensibile si intende la mappa di pixel;
 - la dimensione dei pixel;
-- le lamine di metallo utilizzate per l'esperimento voluto, bisogna richiamare una o più lamine create dalla classe precedente, ad esempio: "lamine_metallo = [lamina_metallo1,lamina_metallo2]";
+- le lamine di metallo utilizzate per l'esperimento voluto, bisogna richiamare una o più lamine create attraverso la classe precedente, ad esempio: "lamine_metallo = [lamina_metallo1,lamina_metallo2]";
 - il numero di particelle alpha del fascio incidente;
 - una condizione sul parametro di impatto (b), tale condizione verrà usata per decidere se una particella che arriva alla stessa altezza del nucleo viene deviata o meno: "if b <= self.condizione_b";
 - la dimensione dello schermo sensibile di pixel: è importante per una corretta visualizzazione delle particelle scatterate che questo valore sia scelto correttamente.
@@ -82,10 +83,9 @@ d) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa tre lam
 
     Successivamente è uguale al punto c) solo che "lamine_metallo = [lamina_metallo4,lamina_metallo5,lamina_metallo6]"
 
+Per i punti c) e d) si è abbassato il valore della condizione di deviazione in quanto non veniva scatterata nessuna particella nelle lamine successive poichè si erano già allontanate sufficientemente da non rispettare più la condizione di scattering dopo la prima lamina.
 
-Quanto fatto per i punti precedenti può essere ripetuto con un minore numero di particelle soprattutto per i punti c) e d), regolando chiaramente anche le dimensioni dello schermo di pixel e l'attributo "condizione_b" (perchè inviando meno particelle è poco probabile che esse vengano scatterate con valori sulla condizione di b molto piccoli), come già spiegato precedentemente.
+Quanto fatto per i punti precedenti può essere ripetuto con un minore numero di particelle, regolando chiaramente anche le dimensioni dello schermo di pixel e l'attributo "condizione_b" (perchè inviando meno particelle saranno poche anche quelle scatterate), come già spiegato precedentemente.
 
 Da notare che i valori sopra scelti per l'attributo "condizione_b" nei punti a) e b) sono quelli che meglio approssimano la distribuzione attesa per 20000 particelle: circa il 5% delle particelle viene scatterato (1 su 20).
-Non è un valore universale in quanto cambiando, ad esempio, il raggio del foro collimatore si notano meno particelle deviate anche mantenendo lo stesso valore di "condizione_b", questo perchè si ha un fascio iniziale meno collimato e quindi più sparpagliato e distante dal nucleo.
-
-Per i punti c) e d) si è abbassato il valore della condizione di deviazione in quanto non veniva scatterata nessuna particella nelle lamine successive poichè si erano già allontanate sufficientemente da non rispettare più la condizione di scattering dopo la prima lamina.
+Non è un valore universale in quanto, ad esempio, cambiando il raggio del foro collimatore si notano meno particelle deviate anche mantenendo lo stesso valore di "condizione_b", questo perchè si ha un fascio iniziale meno collimato e quindi più sparpagliato e distante dal nucleo.
