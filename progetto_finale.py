@@ -163,6 +163,7 @@ class esperimento_Rutherford:
                                     posizione_finale_y = (nuova_posizione_iniziale[1] + direzione[1] * (self.posizione_schermo_sensibile - lamina.nucleo[1]))
                                     
                                     posizione_finale = (posizione_finale_x, posizione_finale_y)
+                                    
                             # Se dopo la prima lamina ce ne sono altre:    
                                     
                             else:
