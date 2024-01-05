@@ -5,7 +5,7 @@ La richiesta del progetto era quella di sviluppare in Python una simulazione Mon
 
 Innanzitutto bisogna specificare che ciò che è stato fatto è un'approssimazione dell'esperienza reale, in quanto si sono supposte considerazioni e condizioni per semplificare il tutto.
 
-Come detto precedentemente, il codice una simulazione approssimata dell'esperimento di Rutherford incentrato soprattutto sul numero possibile di lamine, in modo particolare fino a 3. Alcune parti sono state pensate per una possibile implementazione e modifica, se necessarie, a casi più generali.
+Come detto precedentemente, il codice fornisce una simulazione approssimata dell'esperimento di Rutherford incentrato soprattutto sul numero possibile di lamine, in modo particolare fino a 3. Alcune parti sono state pensate per una possibile implementazione e modifica, se necessarie, a casi più generali.
 
 Nel codice si definisce inizialmente la classe  "Lamina_metallo" che permette di creare l'oggetto lamina con diversi attributi di input, in ordine:
 
