@@ -508,16 +508,16 @@ lamina_metallo1 = Lamina_metallo(posizione = np.array([-2, 2]), materiale = "oro
 
 prova1 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.005,
                                 posizione_schermo_sensibile = 5,  dimensioni_pixel = 0.00025,
-                                lamine_metallo = [lamina_metallo1], n_particelle = 20000, condizione_b = 0.00000001, dimensione_schermo = 0.05)
+                                lamine_metallo = [lamina_metallo1], n_particelle = 20000, condizione_b = 0.00000085, dimensione_schermo = 0.05)
 prova1.visualizza_apparato()
-prova1.simulazione()
 
+prova1.simulazione()
 
 # Particella alpha dal decadimento di 214Po (E = 7.7MeV) che attraversa una lamina d'oro
 
 prova2 = esperimento_Rutherford(energia = 7.7, distanza_collimatore = 1, dimensioni_collimatore = 0.005,
                                 posizione_schermo_sensibile = 5, dimensioni_pixel = 0.00025,
-                                lamine_metallo = [lamina_metallo1], n_particelle = 20000, condizione_b = 0.00000001, dimensione_schermo = 0.05)
+                                lamine_metallo = [lamina_metallo1], n_particelle = 20000, condizione_b = 0.00000085, dimensione_schermo = 0.05)
 
 prova2.visualizza_apparato()
 
@@ -531,7 +531,7 @@ lamina_metallo3 = Lamina_metallo(posizione = np.array([-3, 3]),materiale = "oro"
 
 prova3 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.005,
                                 posizione_schermo_sensibile = 5, dimensioni_pixel = 0.00025,
-                                lamine_metallo = [lamina_metallo2,lamina_metallo3], n_particelle = 20000, condizione_b = 0.00001, dimensione_schermo = 0.1)
+                                lamine_metallo = [lamina_metallo2,lamina_metallo3], n_particelle = 20000, condizione_b = 0.000009, dimensione_schermo = 0.1)
 prova3.visualizza_apparato()
 
 prova3.simulazione()
@@ -546,7 +546,7 @@ lamina_metallo6 = Lamina_metallo(posizione = np.array([-2.6, 2.6]), materiale = 
 
 prova4 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.005,
                                 posizione_schermo_sensibile = 5, dimensioni_pixel = 0.00025,
-                                lamine_metallo = [lamina_metallo4,lamina_metallo5,lamina_metallo6], n_particelle = 20000, condizione_b = 0.00001, dimensione_schermo = 0.1)
+                                lamine_metallo = [lamina_metallo4,lamina_metallo5,lamina_metallo6], n_particelle = 20000, condizione_b = 0.000009, dimensione_schermo = 0.1)
 
 prova4.visualizza_apparato()
 
