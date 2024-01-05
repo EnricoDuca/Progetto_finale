@@ -5,7 +5,7 @@ La richiesta del progetto era quella di sviluppare in Python una simulazione Mon
 
 Innanzitutto bisogna specificare che ciò che è stato fatto è un'approssimazione dell'esperienza reale, in quanto si sono supposte considerazioni e condizioni per semplificare il tutto.
 
-Come detto precedentemente, il codice stesso è un'approssimazione dell'esperimento di Rutherford incentrato soprattutto sul numero possibile di lamine, in modo particolare fino a 3. Alcune parti sono pensate per una possibile implementazione e modifica, se necessarie, a casi più generali.
+Come detto precedentemente, il codice stesso è un'approssimazione dell'esperimento di Rutherford incentrato soprattutto sul numero possibile di lamine, in modo particolare fino a 3. Alcune parti sono state pensate per una possibile implementazione e modifica, se necessarie, a casi più generali, ad esempio non è stata presa in considerazione la possibilità che una particella venga totalmente riflessa e torni indietro.
 
 Nel codice si definisce inizialmente la classe  "Lamina_metallo" che permette di creare l'oggetto lamina con diversi attributi di input, in ordine: 
 - la posizione che deve essere del tipo np.array([x, y]) e, come già detto precedentemente, dato che è un'approssimazione bisogna stare attenti a definire una posizione che permetta al nucleo che, si trova al centro della lamina, di collocarsi lungo l'asse y ( un esempio potrebbe essere: posizione = np.array([-2,2]));
@@ -55,7 +55,7 @@ a) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa una lam
 
     prova1 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.005,
                                     posizione_schermo_sensibile = 5,  dimensioni_pixel = 0.00025,
-                                    lamine_metallo = [lamina_metallo1], n_particelle = 20000, condizione_b = 0.00000001, dimensione_schermo = 0.05)
+                                    lamine_metallo = [lamina_metallo1], n_particelle = 20000, condizione_b = 0.00000085, dimensione_schermo = 0.05)
     prova1.visualizza_apparato()
     prova1.simulazione()
 
@@ -83,8 +83,9 @@ d) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa tre lam
     Successivamente è uguale al punto c) solo che "lamine_metallo = [lamina_metallo4,lamina_metallo5,lamina_metallo6]"
 
 
-Quanto fatto per i punti precedenti può essere ripetuto con un minore numero di particelle soprattutto per i punti c) e d), regolando chiaramente anche le dimensioni dello schermo di pixel e l'attributo "condizione_b" (perchè inviando meno particelle è meno probabile che esse vengano scatterate con valori sulla condizione di b molto piccoli).
+Quanto fatto per i punti precedenti può essere ripetuto con un minore numero di particelle soprattutto per i punti c) e d), regolando chiaramente anche le dimensioni dello schermo di pixel e l'attributo "condizione_b" (perchè inviando meno particelle è poco probabile che esse vengano scatterate con valori sulla condizione di b molto piccoli).
 
-Da notare che i valori sopra scelti per l'attributo "condizione_b" nei punti a) e b) sono quelli che meglio approssimano la distribuzione attesa per 20000 particelle, ovvero l'ordine delle decine di particelle vengono scatterate.
-Per i punti c) e d) si è abbassato questo valore in quanto non veniva scatterata nessuna particella nelle lamine successive in quanto si erano già allontanate sufficientemente da non rispettare più la condizione di scattering.
+Da notare che i valori sopra scelti per l'attributo "condizione_b" nei punti a) e b) sono quelli che meglio approssimano la distribuzione attesa per 20000 particelle: circa il 5% delle particelle viene scatterato (1 su 20).
+Non è un valore universale in quanto cambiando, ad esempio, il raggio del foro collimatore si notano meno particelle deviate anche mantenendo lo stesso valore di "condizione_b", questo perchè si ha un fascio iniziale meno collimato e quindi più sparpagliato e distante dal nucleo.
 
+Per i punti c) e d) si è abbassato il valore della condizione di deviazione in quanto non veniva scatterata nessuna particella nelle lamine successive poichè si erano già allontanate sufficientemente da non rispettare più la condizione di scattering dopo la prima lamina.
