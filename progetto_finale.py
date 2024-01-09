@@ -104,9 +104,11 @@ class esperimento_Rutherford:
                 
                 for indice, lamina in enumerate(self.lamine_metallo):
                     
+                    # La particella incontra la prima lamina:
+
                     if (indice == 0):
                         
-                        # Con nuova_posizione_iniziale si intende la posizione finale della particella nel percorso dal collimatore fino alla lamina
+                        # Con nuova_posizione_iniziale si intende la posizione finale della particella raggiunta dal collimatore fino alla lamina
                         
                         nuova_posizione_iniziale_y = posizione_iniziale[1] + (lamina.posizione[1] - self.distanza_collimatore)
 
@@ -121,16 +123,16 @@ class esperimento_Rutherford:
 
                         '''
                         Dato che all'interno di una lamina d'oro di spessore 0,0004mm ci sono circa 1000 atomi, allora quando una 
-                        particella incontra la lamina può essere scatterata da uno o più di essi. Nel nostro Monte Carlo per 
+                        particella incontra la lamina può essere scatterata da uno di essi. Nel nostro Monte Carlo per 
                         introdurre questo fattore casuale si crea un atomo per ogni particella e si calcola il parametro di impatto 
                         come differenza in valore assoluto fra la posizione dell'atomo e quella della particella.
                         Così facendo si assume che ciò che è inizialmente sconosciuto e influenzato da eventi casuali è il parametro 
                         di impatto, poiché si presume la presenza di molti atomi nella lamina con posizioni non completamente definite.
                         '''
 
-                        atom = np.random.uniform(-lamina.lunghezza, lamina.lunghezza)
+                        pos_atom = np.random.uniform(-lamina.lunghezza, lamina.lunghezza) # l'atomo si può trovare in qualsiasi posizione lungo la lamina
                         
-                        b = abs(atom - posizione_iniziale[0]) #cm - parametro di impatto
+                        b = abs(pos_atom - posizione_iniziale[0]) #cm - parametro di impatto
 
                         # Angolo calcolato con la formula di Rutherford
 
@@ -148,8 +150,8 @@ class esperimento_Rutherford:
 
                             '''
                             Se la particella arriva da sotto o da sopra rispetto al nucleo dell'atomo avrà una deflessione diversa in segno.
-                            Questo perchè per la forza di Coulomb può essere attrattiva, se le cariche delle particelle sono opposte,
-                            oppure repulsiva, se le cariche sono le stesse -> questo è il nostro caso.
+                            Questo perchè la forza di Coulomb può essere attrattiva, se le cariche delle particelle sono di segno opposto,
+                            oppure repulsiva, se il segno delle cariche è lo stesso -> questo è il nostro caso.
                             
                             Le particelle alfa sono costituite da due protoni e due neutroni, essenzialmente il nucleo di un atomo
                             di elio. Pertanto, le particelle alfa hanno una carica complessiva positiva di +2.
@@ -160,7 +162,7 @@ class esperimento_Rutherford:
                             Per questo a volte si somma per la direzione * spostamente mentre altre volte la si sottrae.
                             '''
                             
-                            if posizione_iniziale[0] > atom:
+                            if posizione_iniziale[0] > pos_atom:
 
                                 posizione_finale = nuova_posizione_iniziale + direzione * (self.posizione_schermo_sensibile - lamina.posizione[1])
 
@@ -175,7 +177,8 @@ class esperimento_Rutherford:
                                     
                         else:
 
-                            if posizione_iniziale[0] > atom: 
+
+                            if posizione_iniziale[0] > pos_atom: 
 
                                 posizione_finale = nuova_posizione_iniziale + direzione * (lamina.distanza_fra_lamine)
                             
@@ -208,9 +211,9 @@ class esperimento_Rutherford:
 
                         else:
 
-                            atom = np.random.uniform(-lamina.lunghezza, lamina.lunghezza)
+                            pos_atom = np.random.uniform(-lamina.lunghezza, lamina.lunghezza)
 
-                            b = abs(atom - posizione_iniziale[0])
+                            b = abs(pos_atom - posizione_iniziale[0])
 
                             traccia_dopo_lamine_intermedie = [tuple(posizione_finale)]
 
@@ -222,7 +225,7 @@ class esperimento_Rutherford:
 
                             direzione = np.array([np.sin(theta), np.cos(theta)])
                                 
-                            if posizione_finale[0] > atom:
+                            if posizione_finale[0] > pos_atom:
 
                                 posizione_finale = posizione_finale + direzione * (lamina.distanza_fra_lamine)
                                 
@@ -252,9 +255,9 @@ class esperimento_Rutherford:
                         
                         else:
 
-                            atom = np.random.uniform(-lamina.lunghezza, lamina.lunghezza)
+                            pos_atom = np.random.uniform(-lamina.lunghezza, lamina.lunghezza)
                             
-                            b = abs(atom - posizione_iniziale[0])
+                            b = abs(pos_atom - posizione_iniziale[0])
 
                             traccia_dopo_ultima_lamina = [tuple(posizione_finale)]
                             
@@ -264,7 +267,7 @@ class esperimento_Rutherford:
 
                             direzione = np.array([ np.sin(theta), np.cos(theta)]) 
                                 
-                            if posizione_finale[0] > atom:
+                            if posizione_finale[0] > pos_atom:
 
                                 posizione_finale = posizione_finale + direzione * (self.posizione_schermo_sensibile  - (lamina.posizione[1]))
                                 
