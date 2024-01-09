@@ -45,11 +45,12 @@ A questo punto vengono consigliati diversi parametri di prova per la visualizzaz
 
 a) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa una lamina d'oro
 
-    lamina_metallo1 = Lamina_metallo(posizione = np.array([-2, 2]), materiale = "oro", larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 0)
+    lamina_metallo1 = Lamina_metallo(posizione = np.array([-2, 1.5]), materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 0)
 
-    prova1 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.005,
-                                    posizione_schermo_sensibile = 5,  dimensioni_pixel = 0.00025,
-                                    lamine_metallo = [lamina_metallo1], n_particelle = 20000, condizione_b = 0.00000085, dimensione_schermo = 0.05)
+    prova1 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.000000005,
+                                    posizione_schermo_sensibile = 3,  dimensioni_pixel = 0.10e-13,
+                                    lamine_metallo = [lamina_metallo1], n_particelle = 20000, dimensione_schermo = 0.000000004)
+    
     prova1.visualizza_apparato()
     prova1.simulazione()
 
@@ -59,26 +60,33 @@ b) Particella alpha dal decadimento di 214Po (E = 7.7MeV) che attraversa una lam
 
 c) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa due lamine d'oro poste ad 1cm di distanza
 
-    lamina_metallo2 = Lamina_metallo(posizione = np.array([-1.8, 1.8]),materiale = "oro",  larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 1)
-    lamina_metallo3 = Lamina_metallo(posizione = np.array([-3, 3]),materiale = "oro",  larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 1)
+    lamina_metallo2 = Lamina_metallo(posizione = np.array([-2, 2]),materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 1)
+    lamina_metallo3 = Lamina_metallo(posizione = np.array([-3, 3]),materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 1)
 
-    prova3 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.005,
-                                    posizione_schermo_sensibile = 5, dimensioni_pixel = 0.00025,
-                                    lamine_metallo = [lamina_metallo2,lamina_metallo3], n_particelle = 20000,condizione_b = 0.000009, dimensione_schermo = 0.1)
+    prova3 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.000000005,
+                                    posizione_schermo_sensibile = 5, dimensioni_pixel = 0.10e-13,
+                                    lamine_metallo = [lamina_metallo2,lamina_metallo3], n_particelle = 20000, 
+                                    dimensione_schermo = 0.000000004)
+
     prova3.visualizza_apparato()
     prova3.simulazione()
 
 d) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa tre lamine d'oro poste ad 1mm di distanza
 
-    lamina_metallo4 = Lamina_metallo(posizione = np.array([-2, 2]), materiale = "oro", larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 0.1)
-    lamina_metallo5 = Lamina_metallo(posizione = np.array([-2.3, 2.3]), materiale = "oro", larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 0.1)
-    lamina_metallo6 = Lamina_metallo(posizione = np.array([-2.6, 2.6]), materiale = "oro", larghezza = 0.2, numero_atomico = 79, distanza_fra_lamine = 0.1)
+    lamina_metallo4 =Lamina_metallo(posizione = np.array([-2, 2]), materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 0.1)
+    lamina_metallo5 =Lamina_metallo(posizione = np.array([-2, 2.1]), materiale = "oro", numero_atomico = 79,distanza_fra_lamine = 0.1)
+    lamina_metallo6 =Lamina_metallo(posizione = np.array([-2, 2.2]), materiale = "oro", numero_atomico = 79,distanza_fra_lamine = 0.1)
 
-    Successivamente è uguale al punto c) solo che "lamine_metallo = [lamina_metallo4,lamina_metallo5,lamina_metallo6]"
+    prova4 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.000000005,
+                                posizione_schermo_sensibile = 3, dimensioni_pixel = 10e-13,
+                                lamine_metallo = [lamina_metallo4,lamina_metallo5,lamina_metallo6], n_particelle = 20000, dimensione_schermo = 0.000000004)
+    prova4.visualizza_apparato()
+    prova4.simulazione()
 
-Per i punti c) e d) si è abbassato il valore della condizione di deviazione in quanto non veniva scatterata nessuna particella nelle lamine successive poichè si erano già allontanate sufficientemente da non rispettare più la condizione di scattering dopo la prima lamina.
+Quanto fatto per i punti precedenti può essere ripetuto con un minore numero di particelle, regolando chiaramente anche le dimensioni dello schermo di pixel.
 
-Quanto fatto per i punti precedenti può essere ripetuto con un minore numero di particelle, regolando chiaramente anche le dimensioni dello schermo di pixel e l'attributo "condizione_b" (perchè inviando meno particelle saranno poche anche quelle scatterate), come già spiegato precedentemente.
+Si noti che nella visualizzazione della mappa dei pixel molte particelle rimangono all'interno della circonferenza di partenza (foro collimatore) perchè vengono deviate di poco, altre invece vengono scatterate di più e si trovano in posizioni differenti.
 
-Da notare che i valori sopra scelti per l'attributo "condizione_b" nei punti a) e b) sono quelli che meglio approssimano la distribuzione attesa per 20000 particelle: circa il 5% delle particelle viene scatterato (1 su 20).
-Non è un valore universale in quanto, ad esempio, cambiando il raggio del foro collimatore si notano meno particelle deviate anche mantenendo lo stesso valore di "condizione_b", questo perchè si ha un fascio iniziale meno collimato e quindi più sparpagliato e distante dal nucleo.
+Quando ci sono più lamine può avvenire un caso particolare: la particella, dopo essere stata scatterata dalla prima lamina, incontra un atomo della lamina successiva e può essere respinta o verso l'alto (verso sinistra se si pensa a come si visualizza l'esperimento in "visualizza_apparato()) o verso il basso (verso destra se si pensa a come si visualizza l'esperimento in "visualizza_apparato()). Infatti se l'atomo si trova in una posizione inferiore rispetto alla particella allora quest'ultima viene respinta verso il basso mentre se è la particella ad essere in una posizione più piccola rispetto all'atomo allora sarà deviata verso l'alto.
+
+Per questo motivo in "prova3" e "prova4" si possono notare alcune particelle che sono state deviate dalla lamina precedente e, una volta incontrata la lamina successiva, avere una specie di moto in linea retta; in realtà se si ingrandisce "manualmente" il grafico delle tracce si può osservare che non sono linee rette ma hanno una piccolissima pendenza (vero anche per il caso con una sola lamina, in quanto l'angolo di deviazione è minimo).
