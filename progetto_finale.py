@@ -361,7 +361,7 @@ class esperimento_Rutherford:
                 plt.figure(figsize=(11, 7))
                 plt.hist(angoli_deflessione3, bins=1000, color='darkred', alpha=0.7)
                 plt.title('Distribuzione degli angoli di deflessione terza lamina')
-                plt.xlabel('Angolo di deflessione terza lamina (gradi)')
+                plt.xlabel('Angolo di deflessione ultima lamina (gradi)')
                 plt.ylabel('Frequenza')
                 # plt.grid(True)
                 plt.show()
