@@ -46,7 +46,7 @@ a) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa una lam
     lamina_metallo1 = Lamina_metallo(posizione = np.array([-2, 1.5]), materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 0)
 
     prova1 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.000000005,
-                                    posizione_schermo_sensibile = 3,  dimensioni_pixel = 0.10e-13,
+                                    posizione_schermo_sensibile = 3,  dimensioni_pixel = 10e-13,
                                     lamine_metallo = [lamina_metallo1], n_particelle = 20000, dimensione_schermo = 0.000000004)
     
     prova1.visualizza_apparato()
@@ -62,7 +62,7 @@ c) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa due lam
     lamina_metallo3 = Lamina_metallo(posizione = np.array([-3, 3]),materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 1)
 
     prova3 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.000000005,
-                                    posizione_schermo_sensibile = 5, dimensioni_pixel = 0.10e-13,
+                                    posizione_schermo_sensibile = 5, dimensioni_pixel = 10e-13,
                                     lamine_metallo = [lamina_metallo2,lamina_metallo3], n_particelle = 20000, 
                                     dimensione_schermo = 0.000000004)
 
