@@ -360,7 +360,7 @@ class esperimento_Rutherford:
                 
                 plt.figure(figsize=(11, 7))
                 plt.hist(angoli_deflessione3, bins=1000, color='darkred', alpha=0.7)
-                plt.title('Distribuzione degli angoli di deflessione terza lamina')
+                plt.title('Distribuzione degli angoli di deflessione ultima lamina')
                 plt.xlabel('Angolo di deflessione ultima lamina (gradi)')
                 plt.ylabel('Frequenza')
                 # plt.grid(True)
@@ -487,9 +487,9 @@ lamina_metallo1 = Lamina_metallo(posizione = np.array([-2, 1.5]), materiale = "o
 prova1 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.000000005,
                                 posizione_schermo_sensibile = 3, dimensioni_pixel = 10e-13,
                                 lamine_metallo = [lamina_metallo1], n_particelle = 20000, dimensione_schermo = 0.000000004)
-prova1.visualizza_apparato()
+# prova1.visualizza_apparato()
 
-prova1.simulazione()
+# prova1.simulazione()
 
 # Particella alpha dal decadimento di 214Po (E = 7.7MeV) che attraversa una lamina d'oro
 
@@ -497,9 +497,9 @@ prova2 = esperimento_Rutherford(energia = 7.7, distanza_collimatore = 1, dimensi
                                 posizione_schermo_sensibile = 3, dimensioni_pixel = 10e-13,
                                 lamine_metallo = [lamina_metallo1], n_particelle = 20000, dimensione_schermo = 0.000000004)
 
-prova2.visualizza_apparato()
+# prova2.visualizza_apparato()
 
-prova2.simulazione()
+# prova2.simulazione()
 
 
 # Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa due lamine d'oro poste ad 1cm di distanza
