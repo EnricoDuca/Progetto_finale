@@ -39,8 +39,6 @@ Per quanto riguarda lo schermo sensibile se viene scelto con grandi dimensioni n
 Stesso discorso per le dimensioni dei pixel: pixel troppo piccoli sono di difficile rintracciamento visivo, mentre pixel troppo grandi inglobano troppi dati e non vi è apprezzamento fisico del fenomeno dello scattering.
 Si consiglia di fare qualche prova con diversi parametri per prenderci la mano e capire come impostare al meglio la mappa di pixel.
 
-Se si vuole confrontare cosa succede quando si aggiungono più lamine bisogna osservare lo schermo di pixel: quando abbiamo più di una lamina i dati intorno all'origine (centro dello schermo) sono più sparpagliati e quindi maggiormente riconoscibili, questo appunto perchè una particella che viene "scatterata" più volte si troverà in una posizione finale maggiore di una deviata solamente una volta.
-
 A questo punto vengono consigliati diversi parametri di prova per la visualizzazione di 4 diversi casi:
 
 a) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa una lamina d'oro
