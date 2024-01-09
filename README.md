@@ -87,4 +87,9 @@ Si noti che nella visualizzazione della mappa dei pixel molte particelle rimango
 
 Quando ci sono più lamine può avvenire un caso particolare: la particella, dopo essere stata scatterata dalla prima lamina, incontra un atomo della lamina successiva e può essere respinta o verso l'alto (verso sinistra se si pensa a come si visualizza l'esperimento in "visualizza_apparato()) o verso il basso (verso destra se si pensa a come si visualizza l'esperimento in "visualizza_apparato()). Infatti se l'atomo si trova in una posizione inferiore rispetto alla particella allora quest'ultima viene respinta verso il basso mentre se è la particella ad essere in una posizione più piccola rispetto all'atomo allora sarà deviata verso l'alto.
 
+Questo perchè per la forza di Coulomb può essere attrattiva, se le cariche delle particelle sono opposte, oppure repulsiva, se le cariche sono le stesse -> questo è il nostro caso.
+Le particelle alfa sono costituite da due protoni e due neutroni, essenzialmente il nucleo di un atomo di elio. Pertanto, le particelle alfa hanno una carica complessiva positiva di +2.
+Il nucleo di un atomo di oro è costituito da protoni e neutroni. L'oro ha un numero atomico di 79, il che significa che ci sono 79 protoni nel suo nucleo, quindi ha una carica positiva di +79.
+
+
 Per questo motivo in "prova3" e "prova4" si possono notare alcune particelle che sono state deviate dalla lamina precedente e, una volta incontrata la lamina successiva, avere una specie di moto in linea retta; in realtà se si ingrandisce "manualmente" il grafico delle tracce si può osservare che non sono linee rette ma hanno una piccolissima pendenza (vero anche per il caso con una sola lamina, in quanto l'angolo di deviazione è minimo).
