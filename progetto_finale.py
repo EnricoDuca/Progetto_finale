@@ -95,7 +95,7 @@ class esperimento_Rutherford:
                 '''
                 posizione_iniziale = self.posizione_collimatore + self.raggio_collimatore * direzione_iniziale
                 
-                # linea di codice sottostante da scommentare se si vuole un fascio perfettamente collimato, si vedono meglio le tracce delle particelle:
+                # linea di codice sottostante da scommentare se si vuole un fascio perfettamente collimato:
                 
                 # posizione_iniziale = self.posizione_collimatore
                 
