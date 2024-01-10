@@ -519,7 +519,7 @@ class esperimento_Rutherford:
         ax.plot(0, self.posizione_schermo_sensibile, 'g^', label='Schermo sensibile ')
     
         ax.set_xlabel('Posizione X (cm)')
-        ax.set_ylabel('Posizione Y (cm)')
+        ax.set_ylabel('Posizione Z (cm)')
         ax.set_title('Apparato sperimentale Rutherford')
         
         ax.legend()
