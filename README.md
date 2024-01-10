@@ -9,7 +9,7 @@ Come detto precedentemente, il codice fornisce una simulazione approssimata dell
 
 Nel codice si definisce inizialmente la classe  "Lamina_metallo" che permette di creare l'oggetto lamina con diversi attributi di input, in ordine:
 
-- la posizione, che deve essere del tipo np.array([x, y]) e, come già detto precedentemente, dato che si tratta di una approssimazione si colloca lungo l'asse y. Un esempio potrebbe essere "posizione = np.array([-2, 1.5])": in questo caso la lamina si dispone simmetricamente all'asse delle ordinate, con l'ascissa che va da -2 a 2 e y = 1.5. E' importante che x in input sia < 0 per una buona interpretazione grafica e logica, in quanto il codice assume per scontato che la lamina intersechi l'asse y.
+- la posizione, che deve essere del tipo np.array([x, z]) e, come già detto precedentemente, dato che si tratta di una approssimazione si colloca lungo l'asse z. Un esempio potrebbe essere "posizione = np.array([-2, 1.5])": in questo caso la lamina si dispone simmetricamente all'asse delle ordinate, con l'ascissa che va da -2 a 2 e z = 1.5. E' importante che x in input sia < 0 per una buona interpretazione grafica e logica, in quanto il codice assume per scontato che la lamina intersechi l'asse z.
 - il materiale di cui è composta la lamina da passare come stringa (ad esempio materiale = "oro");
 - il numero atomico del materiale di cui è composta la lamina;
 - la distanza fra due o più lamine: si suppone che le lamine sono distanti di uguale valore (esso va inserito ugualmente nei diversi oggetti).
