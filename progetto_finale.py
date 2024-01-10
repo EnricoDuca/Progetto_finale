@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.constants import e, epsilon_0
-
+from mpl_toolkits.mplot3d import Axes3D
 
 class Lamina_metallo:
 
@@ -28,7 +28,7 @@ class esperimento_Rutherford:
         
         self.dimensioni_collimatore = dimensioni_collimatore
     
-        self.posizione_schermo_sensibile = posizione_schermo_sensibile
+        self.posizione_schermo_sensibile = posizione_schermo_sensibile # lungo l'asse z
         
         self.dimensioni_pixel = dimensioni_pixel
 
@@ -36,9 +36,9 @@ class esperimento_Rutherford:
         
         self.n_particelle = n_particelle
 
-        # Posizione foro di collimazione lungo l'asse y
+        # Posizione foro di collimazione lungo l'asse z
 
-        self.posizione_collimatore = np.array([0, distanza_collimatore])
+        self.posizione_collimatore = np.array([0, 0, distanza_collimatore])
 
         self.raggio_collimatore = dimensioni_collimatore / 2.0 # Raggio del foro collimatore
 
@@ -85,14 +85,15 @@ class esperimento_Rutherford:
 
                 # Posiziono la particella inizialmente all'interno del foro del collimatore
 
-                direzione_iniziale = np.array([np.sin(angolo_incidenza) * np.cos(theta), np.sin(angolo_incidenza) * np.sin(theta)])
-
+                direzione_iniziale = np.array([np.sin(angolo_incidenza) * np.cos(theta), np.sin(angolo_incidenza) * np.sin(theta), 0])
+                
+                
                 '''
                 Il motivo per cui viene calcolato il vettore direzione è perché, in termini di coordinate 
                 cartesiane, la direzione è rappresentata come un vettore tridimensionale normalizzato. 
                 Questo vettore indica la direzione in cui la particella si sta muovendo.
-                
                 '''
+
                 posizione_iniziale = self.posizione_collimatore + self.raggio_collimatore * direzione_iniziale
                 
                 # linea di codice sottostante da scommentare se si vuole un fascio perfettamente collimato:
@@ -110,11 +111,13 @@ class esperimento_Rutherford:
                         
                         # Con nuova_posizione_iniziale si intende la posizione finale della particella raggiunta dal collimatore fino alla lamina
                         
-                        nuova_posizione_iniziale_y = posizione_iniziale[1] + (lamina.posizione[1] - self.distanza_collimatore)
+                        nuova_posizione_iniziale_z = posizione_iniziale[2] + (lamina.posizione[1] - self.distanza_collimatore)
+
+                        nuova_posizione_iniziale_y = posizione_iniziale[1]
 
                         nuova_posizione_iniziale_x = posizione_iniziale[0]
 
-                        nuova_posizione_iniziale = (nuova_posizione_iniziale_x, nuova_posizione_iniziale_y)
+                        nuova_posizione_iniziale = (nuova_posizione_iniziale_x, nuova_posizione_iniziale_y, nuova_posizione_iniziale_z)
                         
 
                         traccia_particella_fino_prima_lamina.append(tuple(nuova_posizione_iniziale))
@@ -123,34 +126,37 @@ class esperimento_Rutherford:
 
                         '''
                         Dato che all'interno di una lamina d'oro di spessore 0,0004mm ci sono circa 1000 atomi, allora quando una 
-                        particella incontra la lamina può essere scatterata da uno di essi. Nel nostro Monte Carlo per 
-                        introdurre questo fattore casuale si crea un atomo per ogni particella e si calcola il parametro di impatto 
-                        come differenza in valore assoluto fra la posizione dell'atomo e quella della particella.
+                        particella incontra la lamina può essere scatterata da uno di essi. Nel nostro Monte Carlo, per 
+                        introdurre questo fattore casuale, si crea un atomo intorno ad ogni particella; la loro distanza è 
+                        ragionevolmente confrontabile con il raggio atomico (qualche angstrom, circa 10^-10m), successivamente si 
+                        calcola il parametro di impatto come differenza in valore assoluto fra la posizione dell'atomo e quella della particella.
+                        
                         Così facendo si assume che ciò che è inizialmente sconosciuto e influenzato da eventi casuali è il parametro 
                         di impatto, poiché si presume la presenza di molti atomi nella lamina con posizioni non completamente definite.
                         '''
 
-                        pos_atom = np.random.uniform(-lamina.lunghezza, lamina.lunghezza) # l'atomo si può trovare in qualsiasi posizione lungo la lamina
+                        pos_atom = np.random.uniform(posizione_iniziale[0] - 10**-10, posizione_iniziale[0] + 10**-10) # l'atomo si può trovare in qualsiasi posizione lungo la lamina
                         
-                        b = abs(pos_atom - posizione_iniziale[0]) #cm - parametro di impatto
+                        b = abs(pos_atom - posizione_iniziale[0]) #m - parametro di impatto
 
                         # Angolo calcolato con la formula di Rutherford
 
-                        theta = 2 * np.arctan((lamina.numero_atomico * e**2) / (2 * np.pi * epsilon_0 * self.energia *1.602*10**-13 * b*10**-2)) # in rad
+                        theta = 2 * np.arctan((lamina.numero_atomico * e**2) / (2 * np.pi * epsilon_0 * self.energia *1.602*10**-13 * b )) # in rad
 
                         # l'energia è stata convertita in Joule mentre b è stata calcolata in metri per rendere l'argomento dell'arcotangente a-dimensionale
 
                         angoli_deflessione.append(theta*180/np.pi) # angolo in gradi
 
-                        direzione = np.array([np.sin(theta), np.cos(theta)]) 
-                            
+                        # direzione = np.array([np.sin(theta), np.cos(theta)]) 
+
+                        phi = np.random.uniform(0, 2 * np.pi)
+
                         # Se c'è solo una lamina la particella subito dopo la lamina incontra lo schermo di pixel:   
                                                         
                         if len(self.lamine_metallo) == 1: 
 
                             '''
-                            Se la particella arriva da sotto o da sopra rispetto al nucleo dell'atomo avrà una deflessione diversa in segno.
-                            Questo perchè la forza di Coulomb può essere attrattiva, se le cariche delle particelle sono di segno opposto,
+                            La forza di Coulomb può essere attrattiva se le cariche delle particelle sono di segno opposto,
                             oppure repulsiva, se il segno delle cariche è lo stesso -> questo è il nostro caso.
                             
                             Le particelle alfa sono costituite da due protoni e due neutroni, essenzialmente il nucleo di un atomo
@@ -159,35 +165,32 @@ class esperimento_Rutherford:
                             Il nucleo di un atomo di oro è costituito da protoni e neutroni. L'oro ha un numero atomico di 79, 
                             il che significa che ci sono 79 protoni nel suo nucleo, quindi ha una carica positiva di +79.
 
-                            Per questo a volte si somma per la direzione * spostamente mentre altre volte la si sottrae.
+                            Per questo tutte le particelle vengono scatterate.
                             '''
                             
-                            if posizione_iniziale[0] > pos_atom:
+                            # calcolando in coordinate sferiche:
+                            # conoscendo quanto vale la coordinata z si trova il valore del raggio e lo si sostituisce nelle formule per x e y.
 
-                                posizione_finale = nuova_posizione_iniziale + direzione * (self.posizione_schermo_sensibile - lamina.posizione[1])
+                            posizione_finale_x = nuova_posizione_iniziale_x + np.tan(theta) * (self.posizione_schermo_sensibile - lamina.posizione[1]) * np.cos(phi)
 
-                            else:
+                            posizione_finale_y = nuova_posizione_iniziale_y + np.tan(theta) * (self.posizione_schermo_sensibile - lamina.posizione[1]) * np.sin(phi)
 
-                                posizione_finale_x = (nuova_posizione_iniziale[0] - direzione[0] * (self.posizione_schermo_sensibile - lamina.posizione[1]))
-                                posizione_finale_y = (nuova_posizione_iniziale[1] + direzione[1] * (self.posizione_schermo_sensibile - lamina.posizione[1]))
+                            posizione_finale_z = nuova_posizione_iniziale_z +  (self.posizione_schermo_sensibile - lamina.posizione[1])
                                 
-                                posizione_finale = (posizione_finale_x, posizione_finale_y)
+                            posizione_finale = (posizione_finale_x, posizione_finale_y, posizione_finale_z)
                                 
                         # Se dopo la prima lamina ce ne sono altre:    
                                     
                         else:
 
 
-                            if posizione_iniziale[0] > pos_atom: 
-
-                                posizione_finale = nuova_posizione_iniziale + direzione * (lamina.distanza_fra_lamine)
+                            posizione_finale_x = nuova_posizione_iniziale_x + np.tan(theta) * (lamina.distanza_fra_lamine) * np.cos(phi)
                             
-                            else:
-                                
-                                posizione_finale_x = (nuova_posizione_iniziale[0] - direzione[0] * lamina.distanza_fra_lamine)            
-                                posizione_finale_y = (nuova_posizione_iniziale[1] + direzione[1] * lamina.distanza_fra_lamine)
-                                
-                                posizione_finale = (posizione_finale_x, posizione_finale_y)
+                            posizione_finale_y = nuova_posizione_iniziale_y + np.tan(theta) * (lamina.distanza_fra_lamine) * np.sin(phi)                            
+
+                            posizione_finale_z = nuova_posizione_iniziale_z + lamina.distanza_fra_lamine
+                            
+                            posizione_finale = (posizione_finale_x, posizione_finale_y, posizione_finale_z)
                         
                         count += 1
 
@@ -204,38 +207,45 @@ class esperimento_Rutherford:
                         # se la particella non incontra la lamina chiaramente non viene deviata (molto poco probabile se si pongono lamine vicine)
 
                         if np.logical_and(posizione_finale[0] < -lamina.lunghezza / 2, posizione_finale[0] > lamina.lunghezza / 2):
+                            
+                            print('La particella non incontra la seconda lamina')                     
 
-                            posizione_finale = posizione_finale + direzione *  lamina.distanza_fra_lamine
-                        
+                            posizione_finale_x = posizione_finale_x + np.tan(theta) * (lamina.distanza_fra_lamine) * np.cos(phi)
+                                
+                            posizione_finale_y = posizione_finale_y + np.tan(theta) * (lamina.distanza_fra_lamine) * np.sin(phi)
+                                
+
+                            posizione_finale_z = posizione_finale_z + lamina.distanza_fra_lamine
+                                   
+                            posizione_finale = (posizione_finale_x, posizione_finale_y, posizione_finale_z)
+                            
                         # la particella incontra la lamina di metallo, questa è l'unica condizione per far avvenire la deviazione della particella:
 
                         else:
 
-                            pos_atom = np.random.uniform(-lamina.lunghezza, lamina.lunghezza)
+                            pos_atom = np.random.uniform(posizione_finale_x - 10**-10, posizione_finale_x + 10**-10)
 
-                            b = abs(pos_atom - posizione_iniziale[0])
+                            b = abs(pos_atom - posizione_finale_x)
 
                             traccia_dopo_lamine_intermedie = [tuple(posizione_finale)]
+                            
+                            # Se la particella viene deviata chiaramente cambia anche la direzione di propagazione:
 
-                            theta = 2 * np.arctan((lamina.numero_atomico * e**2) / (2 * np.pi * epsilon_0 * self.energia *1.602*10**-13 * b*10**-2))
+                            theta = 2 * np.arctan((lamina.numero_atomico * e**2) / (2 * np.pi * epsilon_0 * self.energia *1.602*10**-13 * b))
                             
                             angoli_deflessione2.append(theta*180/np.pi)
 
-                            # Se la particella viene deviata chiaramente cambia anche la direzione di propagazione:
+                            phi = np.random.uniform(0, 2 * np.pi)
 
-                            direzione = np.array([np.sin(theta), np.cos(theta)])
-                                
-                            if posizione_finale[0] > pos_atom:
 
-                                posizione_finale = posizione_finale + direzione * (lamina.distanza_fra_lamine)
+                            posizione_finale_x = posizione_finale_x + np.tan(theta) * (lamina.distanza_fra_lamine) * np.cos(phi)
                                 
-                            else:
-                                
-                                posizione_finale_x = posizione_finale[0] - direzione[0] * (lamina.distanza_fra_lamine)
-
-                                posizione_finale_y = posizione_finale[1] + direzione[1] * (lamina.distanza_fra_lamine)
+                            posizione_finale_y = posizione_finale_y + np.tan(theta) * (lamina.distanza_fra_lamine) * np.sin(phi)
+                               
+                    
+                            posizione_finale_z = posizione_finale_z + lamina.distanza_fra_lamine
                                     
-                                posizione_finale = (posizione_finale_x, posizione_finale_y)
+                            posizione_finale = (posizione_finale_x, posizione_finale_y, posizione_finale_z)
 
                             count_successivi += 1
 
@@ -250,55 +260,56 @@ class esperimento_Rutherford:
                     if np.logical_and(indice == (len(self.lamine_metallo)-1), indice != 0):
                         
                         if np.logical_and(posizione_finale[0] < -lamina.lunghezza / 2, posizione_finale[0] > lamina.lunghezza / 2):
+                            
+                            print('Non incontra la terza lamina')
 
-                            posizione_finale = posizione_finale + direzione * (self.posizione_schermo_sensibile  - (lamina.posizione[1]))
+                            posizione_finale_x = posizione_finale_x + np.tan(theta) * (self.posizione_schermo_sensibile - lamina.posizione[1]) * np.cos(phi)
+                                
+                            posizione_finale_y = posizione_finale_y + np.tan(theta) * (self.posizione_schermo_sensibile - lamina.posizione[1]) * np.sin(phi)
+                                
+
+                            posizione_finale_z = posizione_finale_z + self.posizione_schermo_sensibile - lamina.posizione[1]
+                                   
+                            posizione_finale = (posizione_finale_x, posizione_finale_y, posizione_finale_z)
                         
                         else:
 
-                            pos_atom = np.random.uniform(-lamina.lunghezza, lamina.lunghezza)
+                            pos_atom = np.random.uniform(posizione_finale[0] - 10**-10, posizione_finale[0] + 10**-10)
                             
-                            b = abs(pos_atom - posizione_iniziale[0])
+                            b = abs(pos_atom - posizione_finale[0])
 
                             traccia_dopo_ultima_lamina = [tuple(posizione_finale)]
                             
-                            theta = 2 * np.arctan((lamina.numero_atomico * e**2) / (2 * np.pi * epsilon_0 * self.energia *1.602*10**-13 * b*10**-2))
+                            theta = 2 * np.arctan((lamina.numero_atomico * e**2) / (2 * np.pi * epsilon_0 * self.energia *1.602*10**-13 * b))
 
                             angoli_deflessione3.append(theta*180/np.pi)
 
-                            direzione = np.array([ np.sin(theta), np.cos(theta)]) 
+                            phi = np.random.uniform(0, 2 * np.pi)
+    
                                 
-                            if posizione_finale[0] > pos_atom:
+                            posizione_finale_x = posizione_finale_x + np.tan(theta) * (self.posizione_schermo_sensibile - lamina.posizione[1]) * np.cos(phi)
+                                
+                            posizione_finale_y = posizione_finale_y + np.tan(theta) * (self.posizione_schermo_sensibile - lamina.posizione[1]) * np.sin(phi)
+                            
 
-                                posizione_finale = posizione_finale + direzione * (self.posizione_schermo_sensibile  - (lamina.posizione[1]))
-                                
-                            else:
-                                
-                                posizione_finale_x = posizione_finale[0] - direzione[0] * (self.posizione_schermo_sensibile  - (lamina.posizione[1]))
-                                posizione_finale_y = posizione_finale[1] + direzione[1] * (self.posizione_schermo_sensibile  - (lamina.posizione[1]))
-                                
-                                posizione_finale = (posizione_finale_x, posizione_finale_y)
-
+                            posizione_finale_z = posizione_finale_z + self.posizione_schermo_sensibile - lamina.posizione[1]
+                                   
+                            posizione_finale = (posizione_finale_x, posizione_finale_y, posizione_finale_z)
+                        
                             count_ultima_lamina += 1
                         
                         posizioni_scatterate_ultima_lamina.append(count_ultima_lamina)
 
                         traccia_dopo_ultima_lamina.append(tuple(posizione_finale))
-                
+
                 pixel_x = int((posizione_finale[0] + self.dimensione_schermo / 2) / self.dimensioni_pixel)
 
-                pixel_y = int((posizione_finale[1] - self.posizione_schermo_sensibile + self.dimensione_schermo / 2) / self.dimensioni_pixel)
+                pixel_y = int((posizione_finale[1] + self.dimensione_schermo / 2) / self.dimensioni_pixel)
 
                 '''
                 "pixel_x" e "pixel_y" calcolano le coordinate del pixel corrispondente alla posizione finale della particella. 
                 
-                La trasformazione ("posizione_finale[0] + self.dimensione_schermo / 2" e "posizione_finale[1] - self.posizione_schermo_sensibile + self.dimensione_schermo / 2")
-                centra le coordinate rispetto all'origine, poi la divisione per self.dimensioni_pixel converte le 
-                coordinate continue in coordinate discrete di pixel. 
-                
-                Si noti il termine "- self.posizione_schermo_sensibile" in "pixel_y": il suo utilizzo è dato dal fatto che la 
-                coordinata y del piano sensibile è fissa per ogni particella. Nella nostra simulazione infatti la particella compie 
-                un percorso lungo l'asse delle ordinate; per questo la posizione finale viene circa la posizione dello schermo 
-                sensibile, sottraendo quest'ultimo alla posizione_finale[1] si ottiene di quanto è stata deviata la particella lungo l'asse y.
+                La divisione per self.dimensioni_pixel converte le coordinate continue in coordinate discrete di pixel. 
                 
                 La conversione a int è utilizzata per ottenere un indice intero.
                 '''
@@ -335,7 +346,84 @@ class esperimento_Rutherford:
                 print('Sono state deviate nell\' ultima lamina: ',len(posizioni_scatterate_ultima_lamina),' particelle su ',self.n_particelle)
 
 
-            # istogramma angoli di deflessione (quando si inviano parecchie particelle è consigliato diminuire il numero di bins)
+            
+        # plot tracce particelle scatterate
+            
+
+
+            fig = plt.figure(figsize=(11, 7))
+            ax = fig.add_subplot(111, projection='3d')
+
+            for traccia_particella_fino_prima_lamina in tracce_fino_prima_lamina:
+               
+                x_traccia = [pos[0] for pos in traccia_particella_fino_prima_lamina]
+                y_traccia = [pos[1] for pos in traccia_particella_fino_prima_lamina]
+                z_traccia = [pos[2] for pos in traccia_particella_fino_prima_lamina]
+
+                ax.plot(x_traccia, y_traccia, z_traccia)
+
+            for traccia_particella_dopo_prima_lamina in tracce_particelle_dopo_prima_lamina:
+            
+                x_traccia1 = [pos[0] for pos in traccia_particella_dopo_prima_lamina]
+                y_traccia1 = [pos[1] for pos in traccia_particella_dopo_prima_lamina]
+                z_traccia1 = [pos[2] for pos in traccia_particella_dopo_prima_lamina]
+
+                ax.plot(x_traccia1, y_traccia1, z_traccia1)
+
+            for traccia_particella_dopo_lamine_intermedie in tracce_dopo_lamine_intermedie:
+            
+                x_traccia2 = [pos[0] for pos in traccia_particella_dopo_lamine_intermedie]
+                y_traccia2 = [pos[1] for pos in traccia_particella_dopo_lamine_intermedie]
+                z_traccia2 = [pos[2] for pos in traccia_particella_dopo_lamine_intermedie]
+
+                ax.plot(x_traccia2, y_traccia2, z_traccia2)
+
+            for traccia_particella_dopo_ultima_lamina in tracce_dopo_ultima_lamina:
+            
+                x_traccia3 = [pos[0] for pos in traccia_particella_dopo_ultima_lamina]
+                y_traccia3 = [pos[1] for pos in traccia_particella_dopo_ultima_lamina]
+                z_traccia3 = [pos[2] for pos in traccia_particella_dopo_ultima_lamina]
+                
+                ax.plot(x_traccia3, y_traccia3, z_traccia3)
+
+
+            plt.title('Tracce delle particelle nell\'apparato sperimentale')
+            
+            ax.set_xlabel('X Label')
+            ax.set_ylabel('Y Label')
+            ax.set_zlabel('Z Label')
+            
+            for lamina in self.lamine_metallo:
+                
+                '''
+                I valori "(lamina.lunghezza/2)" possono essere divisi per un certo valore per motivi di scala, infatti la lunghezza reale delle lamine
+                a volte è maggiore delle posizioni delle posizioni finali delle particelle; soprattutto se il fascio iniziale ha poche
+                particelle alpha e non vengono deviate di molto il fascio nella rappresentazione delle tracce sembrerà più concentrato sia
+                prima che dopo lo scattering con la lamina (in realtà è solo un problema di scala, come già detto precedentemente). 
+                
+                ''' 
+
+                x_lamina = np.linspace( - (lamina.lunghezza/2), (lamina.lunghezza/2), 100)
+                y_lamina = np.linspace( - (lamina.lunghezza/2), (lamina.lunghezza/2), 100)
+                
+                x_lamina, y_lamina = np.meshgrid(x_lamina, y_lamina)
+
+
+                z_lamina = np.full_like(x_lamina, lamina.posizione[1])
+
+                # np.full_like come parametri vuole un array di cui copia la forma ed il tipo e come secondo input il valore con cui riempire l'array risultante. 
+
+
+                # Traccia la lamina come una superficie
+                ax.plot_surface(x_lamina, y_lamina, z_lamina, color='darkred', alpha = 0.3, label='Lamina')
+
+
+            plt.legend( loc = 'best')
+            plt.grid(True)
+            plt.show()
+
+
+        # istogramma angoli di deflessione (quando si inviano parecchie particelle è consigliato diminuire il numero di bins)
 
 
             plt.figure(figsize=(11, 7))
@@ -346,6 +434,7 @@ class esperimento_Rutherford:
             # plt.grid(True)
             plt.show()
 
+
             if angoli_deflessione2 != []:
 
                 plt.figure(figsize=(11, 7))
@@ -355,6 +444,7 @@ class esperimento_Rutherford:
                 plt.ylabel('Frequenza')
                 # plt.grid(True)
                 plt.show()
+
 
             if angoli_deflessione3 != []:
                 
@@ -367,50 +457,7 @@ class esperimento_Rutherford:
                 plt.show()
 
 
-            # plot tracce particelle scatterate
-            
-
-            plt.figure(figsize=(11, 7))
-
-            for traccia_particella_fino_prima_lamina in tracce_fino_prima_lamina:
-
-                x_traccia = [pos[0] for pos in traccia_particella_fino_prima_lamina]
-                y_traccia = [pos[1] for pos in traccia_particella_fino_prima_lamina]
-                
-                plt.plot(y_traccia, x_traccia, '-')
-            
-            for traccia_particella_dopo_prima_lamina in tracce_particelle_dopo_prima_lamina:
-            
-                x_traccia1 = [pos[0] for pos in traccia_particella_dopo_prima_lamina]
-                y_traccia1 = [pos[1] for pos in traccia_particella_dopo_prima_lamina]
-
-                plt.plot(y_traccia1, x_traccia1, '-')
-            
-
-            for traccia_particella_dopo_lamine_intermedie in tracce_dopo_lamine_intermedie:
-            
-                x_traccia2 = [pos[0] for pos in traccia_particella_dopo_lamine_intermedie]
-                y_traccia2 = [pos[1] for pos in traccia_particella_dopo_lamine_intermedie]
-            
-                plt.plot(y_traccia2, x_traccia2, '-')
-            
-            for traccia_particella_dopo_ultima_lamina in tracce_dopo_ultima_lamina:
-            
-                x_traccia3 = [pos[0] for pos in traccia_particella_dopo_ultima_lamina]
-                y_traccia3 = [pos[1] for pos in traccia_particella_dopo_ultima_lamina]
-            
-                plt.plot(y_traccia3, x_traccia3, '-')
-
-            plt.title('Tracce delle particelle nell\'apparato sperimentale')
-
-            plt.xlabel('Posizione Y (cm)')
-            plt.ylabel('Posizione X (cm)')
-
-            plt.grid(True)
-            plt.show()
-
-
-            #piano_schermo_sensibile pixel
+            # Piano_schermo_sensibile pixel
 
 
             plt.figure(figsize= (11,7))
@@ -484,22 +531,23 @@ class esperimento_Rutherford:
         
 lamina_metallo1 = Lamina_metallo(posizione = np.array([-2, 1.5]), materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 0)
 
-prova1 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.000000005,
-                                posizione_schermo_sensibile = 3, dimensioni_pixel = 10e-13,
-                                lamine_metallo = [lamina_metallo1], n_particelle = 20000, dimensione_schermo = 0.000000004)
-# prova1.visualizza_apparato()
+prova1 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.1,
+                                posizione_schermo_sensibile = 1.7, dimensioni_pixel =0.0025,
+                                lamine_metallo = [lamina_metallo1], n_particelle = 5000, dimensione_schermo = 2)
 
-# prova1.simulazione()
+prova1.visualizza_apparato()
+
+prova1.simulazione()
 
 # Particella alpha dal decadimento di 214Po (E = 7.7MeV) che attraversa una lamina d'oro
 
-prova2 = esperimento_Rutherford(energia = 7.7, distanza_collimatore = 1, dimensioni_collimatore = 0.000000005,
-                                posizione_schermo_sensibile = 3, dimensioni_pixel = 10e-13,
-                                lamine_metallo = [lamina_metallo1], n_particelle = 20000, dimensione_schermo = 0.000000004)
+prova2 = esperimento_Rutherford(energia = 7.7, distanza_collimatore = 1, dimensioni_collimatore = 0.1,
+                                posizione_schermo_sensibile = 1.7, dimensioni_pixel = 0.0025,
+                                lamine_metallo = [lamina_metallo1], n_particelle = 5000, dimensione_schermo = 2)
 
-# prova2.visualizza_apparato()
+prova2.visualizza_apparato()
 
-# prova2.simulazione()
+prova2.simulazione()
 
 
 # Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa due lamine d'oro poste ad 1cm di distanza
@@ -507,9 +555,9 @@ prova2 = esperimento_Rutherford(energia = 7.7, distanza_collimatore = 1, dimensi
 lamina_metallo2 = Lamina_metallo(posizione = np.array([-2, 2]),materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 1)
 lamina_metallo3 = Lamina_metallo(posizione = np.array([-3, 3]),materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 1)
 
-prova3 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.000000005,
-                                posizione_schermo_sensibile = 5, dimensioni_pixel = 10e-13,
-                                lamine_metallo = [lamina_metallo2,lamina_metallo3], n_particelle = 20000, dimensione_schermo = 0.000000004)
+prova3 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.1,
+                                posizione_schermo_sensibile = 4, dimensioni_pixel = 0.0025,
+                                lamine_metallo = [lamina_metallo2,lamina_metallo3], n_particelle = 5000, dimensione_schermo = 2)
 
 prova3.visualizza_apparato()
 
@@ -523,9 +571,9 @@ lamina_metallo5 = Lamina_metallo(posizione = np.array([-2, 2.1]), materiale = "o
 
 lamina_metallo6 = Lamina_metallo(posizione = np.array([-2, 2.2]), materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 0.1)
 
-prova4 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.000000005,
-                                posizione_schermo_sensibile = 3, dimensioni_pixel = 10e-13,
-                                lamine_metallo = [lamina_metallo4,lamina_metallo5,lamina_metallo6], n_particelle = 20000, dimensione_schermo = 0.000000004)
+prova4 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.1,
+                                posizione_schermo_sensibile = 3, dimensioni_pixel = 0.0025,
+                                lamine_metallo = [lamina_metallo4,lamina_metallo5,lamina_metallo6], n_particelle = 5000, dimensione_schermo = 2)
 
 prova4.visualizza_apparato()
 
