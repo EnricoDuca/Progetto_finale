@@ -31,7 +31,9 @@ Chiaramente per la buona riuscita della simulazione il foro collimatore deve ess
 All'interno della seconda classe si sono definiti anche alcuni moduli:
 
 - "simulazione": riproduce il fascio di particelle alpha che sono deviate dagli atomi d'oro della lamina. Le particelle deviano in accordo con ciascun parametro di impatto, conformemente all'angolo definito dalla formula di Rutherford.
-L'incognita iniziale, controllata da fenomeni casuali, è il parametro di impatto in quanto va assunto che ci siano più atomi nella lamina in posizioni non perfettamente determinate. Tutto ciò è stato realizzato con un iniziale ciclo for che considera il numero di particelle scelto, ed un altro ciclo for indentato al primo per il passaggio attraverso le diverse lamine. Ad ogni giro del for che agisce sul numero di particelle si crea un atomo lungo la lunghezza della lamina e, si calcola il parametro di impatto come la differenza fra la posizione di questo atomo creato casualmente e la posizione della particella quando arriva alla lamina. All'interno dei due cicli for vi sono molte possibilità in base all'apparato scelto e al numero di particelle, per risolvere questa moltitudine di casi si sono utilizzate delle condizioni "if". Inoltre nel modulo "simulazione" si mostra anche l'istogramma con tutti gli angoli di deviazione delle particelle alpha (dato che sono valori molto piccoli è necessario zoomare il grafico intorno all'origine), le varie tracce delle particelle e lo schermo di pixel dove è possibile individuare qualitativamente le particelle deviate significamente.
+L'incognita iniziale, controllata da fenomeni casuali, è il parametro di impatto in quanto va assunto che ci siano più atomi nella lamina in posizioni non perfettamente determinate. 
+Tutto ciò è stato realizzato con un iniziale ciclo for che considera il numero di particelle scelto, ed un altro ciclo for indentato al primo per il passaggio attraverso le diverse lamine. 
+Ad ogni giro del for che agisce sul numero di particelle si crea un atomo lungo la lunghezza della lamina in un intorno della posizione della particella dell'ordine di 10^-10m (si è assunto l'ordine dell'angstrom); si calcola il parametro di impatto come la differenza fra la posizione di questo atomo creato casualmente e la posizione della particella quando arriva alla lamina. All'interno dei due cicli for vi sono molte possibilità in base all'apparato scelto e al numero di particelle, per risolvere questa moltitudine di casi si sono utilizzate delle condizioni "if". Inoltre nel modulo "simulazione" si mostra anche l'istogramma con tutti gli angoli di deviazione delle particelle alpha (dato che sono valori molto piccoli è necessario zoomare il grafico intorno all'origine), le varie tracce delle particelle e lo schermo di pixel dove è possibile individuare qualitativamente le particelle deviate significamente.
 
 - "visualizza_apparato" che, permette di visualizzare attraverso "subplots": il foro collimatore con annesso raggio, una o più lamine di  metallo ed infine lo schermo sensibile. Tutto ciò viene mostrato nelle posizioni scelte dall'utente negli attributi di input.
 
@@ -42,54 +44,55 @@ Si consiglia di fare qualche prova con diversi parametri per prenderci la mano e
 A questo punto vengono consigliati diversi parametri di prova per la visualizzazione di 4 diversi casi:
 
 a) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa una lamina d'oro
-
+        
     lamina_metallo1 = Lamina_metallo(posizione = np.array([-2, 1.5]), materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 0)
 
-    prova1 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.000000005,
-                                    posizione_schermo_sensibile = 3,  dimensioni_pixel = 10e-13,
-                                    lamine_metallo = [lamina_metallo1], n_particelle = 20000, dimensione_schermo = 0.000000004)
-    
+    prova1 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.1,
+                                    posizione_schermo_sensibile = 1.7, dimensioni_pixel =0.0025,
+                                    lamine_metallo = [lamina_metallo1], n_particelle = 5000, dimensione_schermo = 2)
+
     prova1.visualizza_apparato()
+
     prova1.simulazione()
 
 b) Particella alpha dal decadimento di 214Po (E = 7.7MeV) che attraversa una lamina d'oro
 
-    Uguale al caso di prima però inserire nell'attributo "energia" il valore di 7.7 al posto di 5.5
+    prova2 = esperimento_Rutherford(energia = 7.7, distanza_collimatore = 1, dimensioni_collimatore = 0.1,
+                                    posizione_schermo_sensibile = 1.7, dimensioni_pixel = 0.0025,
+                                    lamine_metallo = [lamina_metallo1], n_particelle = 5000, dimensione_schermo = 2)
+
+    prova2.visualizza_apparato()
+
+    prova2.simulazione()
+
 
 c) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa due lamine d'oro poste ad 1cm di distanza
 
     lamina_metallo2 = Lamina_metallo(posizione = np.array([-2, 2]),materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 1)
     lamina_metallo3 = Lamina_metallo(posizione = np.array([-3, 3]),materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 1)
 
-    prova3 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.000000005,
-                                    posizione_schermo_sensibile = 5, dimensioni_pixel = 10e-13,
-                                    lamine_metallo = [lamina_metallo2,lamina_metallo3], n_particelle = 20000, 
-                                    dimensione_schermo = 0.000000004)
+    prova3 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.1,
+                                    posizione_schermo_sensibile = 4, dimensioni_pixel = 0.0025,
+                                    lamine_metallo = [lamina_metallo2,lamina_metallo3], n_particelle = 5000, dimensione_schermo = 2)
 
     prova3.visualizza_apparato()
+
     prova3.simulazione()
 
 d) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa tre lamine d'oro poste ad 1mm di distanza
 
-    lamina_metallo4 =Lamina_metallo(posizione = np.array([-2, 2]), materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 0.1)
-    lamina_metallo5 =Lamina_metallo(posizione = np.array([-2, 2.1]), materiale = "oro", numero_atomico = 79,distanza_fra_lamine = 0.1)
-    lamina_metallo6 =Lamina_metallo(posizione = np.array([-2, 2.2]), materiale = "oro", numero_atomico = 79,distanza_fra_lamine = 0.1)
+    lamina_metallo4 = Lamina_metallo(posizione = np.array([-2, 2]), materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 0.1)
 
-    prova4 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.000000005,
-                                posizione_schermo_sensibile = 3, dimensioni_pixel = 10e-13,
-                                lamine_metallo = [lamina_metallo4,lamina_metallo5,lamina_metallo6], n_particelle = 20000, dimensione_schermo = 0.000000004)
+    lamina_metallo5 = Lamina_metallo(posizione = np.array([-2, 2.1]), materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 0.1)
+
+    lamina_metallo6 = Lamina_metallo(posizione = np.array([-2, 2.2]), materiale = "oro", numero_atomico = 79, distanza_fra_lamine = 0.1)
+
+    prova4 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensioni_collimatore = 0.1,
+                                    posizione_schermo_sensibile = 3, dimensioni_pixel = 0.0025,
+                                    lamine_metallo = [lamina_metallo4,lamina_metallo5,lamina_metallo6], n_particelle = 5000, dimensione_schermo = 2)
+
     prova4.visualizza_apparato()
+
     prova4.simulazione()
 
-Quanto fatto per i punti precedenti può essere ripetuto con un minore numero di particelle, regolando chiaramente anche le dimensioni dello schermo di pixel.
-
-Si noti che nella visualizzazione della mappa dei pixel molte particelle rimangono all'interno della circonferenza di partenza (foro collimatore) perchè vengono deviate di poco, altre invece vengono scatterate di più e si trovano in posizioni differenti.
-
-Quando ci sono più lamine può avvenire un caso particolare: la particella, dopo essere stata scatterata dalla prima lamina, incontra un atomo della lamina successiva e può essere respinta o verso l'alto (verso sinistra se si pensa a come si visualizza l'esperimento in "visualizza_apparato()) o verso il basso (verso destra se si pensa a come si visualizza l'esperimento in "visualizza_apparato()). Infatti se l'atomo si trova in una posizione inferiore rispetto alla particella allora quest'ultima viene respinta verso il basso mentre se è la particella ad essere in una posizione più piccola rispetto all'atomo allora sarà deviata verso l'alto.
-
-Questo perchè la forza di Coulomb può essere attrattiva, se le cariche delle particelle sono di segno opposto, oppure repulsiva, se il segno delle cariche è lo stesso -> questo è il nostro caso.
-Le particelle alfa sono costituite da due protoni e due neutroni, essenzialmente il nucleo di un atomo di elio. Pertanto, le particelle alfa hanno una carica complessiva positiva di +2.
-Il nucleo di un atomo di oro è costituito da protoni e neutroni. L'oro ha un numero atomico di 79, il che significa che ci sono 79 protoni nel suo nucleo, quindi ha una carica positiva di +79.
-
-
-Per questo motivo in "prova3" e "prova4" si possono notare alcune particelle che sono state deviate dalla lamina precedente e, una volta incontrata la lamina successiva, avere una specie di moto in linea retta; in realtà se si ingrandisce "manualmente" il grafico delle tracce si può osservare che non sono linee rette ma hanno una piccolissima pendenza (vero anche per il caso con una sola lamina, in quanto l'angolo di deviazione è minimo).
+Quanto fatto per i punti precedenti può essere ripetuto con un minore numero di particelle, regolando chiaramente anche le dimensioni dello schermo di pixel. Se invece si vuole una migliore analisi statistica si consiglia di aumentare il numero di particelle, facendo attenzione alla rappresentazione delle tracce che potrebbe metterci un po' di tempo per essere eseguita.
