@@ -76,11 +76,11 @@ class esperimento_Rutherford:
 
             for i in range(self.n_particelle): # "i" viene utilizzato solo per ripetere in ciclo tante volte quante sono le particelle considerate
                 
-                theta = np.random.uniform(0,2*np.pi)
+                theta = np.random.uniform(0,2 * np.pi)
                 
                 # Fisso un angolo di incidenza molto piccolo, in modo da avere un fascio collimato che non si disperda:
                 
-                angolo_incidenza = np.random.uniform(0,0.025) 
+                angolo_incidenza = np.random.uniform(0, 0.025) 
 
                 # Posiziono la particella inizialmente all'interno del foro del collimatore
 
@@ -145,8 +145,6 @@ class esperimento_Rutherford:
                         # l'energia è stata convertita in Joule mentre b è stata calcolata in metri per rendere l'argomento dell'arcotangente a-dimensionale
 
                         angoli_deflessione.append(theta*180/np.pi) # angolo in gradi
-
-                        # direzione = np.array([np.sin(theta), np.cos(theta)]) 
 
                         phi = np.random.uniform(0, 2 * np.pi)
 
@@ -480,8 +478,7 @@ class esperimento_Rutherford:
             # barra di colore:
 
             cbar = plt.colorbar(pixel_map, label='Pixel colpiti')
-            
-            plt.tight_layout()
+
             plt.show()
 
 
