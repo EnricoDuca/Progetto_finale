@@ -134,7 +134,7 @@ class esperimento_Rutherford:
                         di impatto, poiché si presume la presenza di molti atomi nella lamina con posizioni non completamente definite.
                         '''
 
-                        pos_atom = np.random.uniform(posizione_iniziale[0] - 10**-10, posizione_iniziale[0] + 10**-10) # l'atomo si può trovare in qualsiasi posizione lungo la lamina
+                        pos_atom = np.random.uniform(posizione_iniziale[0] - 10**-10, posizione_iniziale[0] + 10**-10)
                         
                         b = abs(pos_atom - posizione_iniziale[0]) #m - parametro di impatto
 
@@ -258,7 +258,7 @@ class esperimento_Rutherford:
                         
                         if np.logical_and(posizione_finale[0] < -lamina.lunghezza / 2, posizione_finale[0] > lamina.lunghezza / 2):
                             
-                            print('Non incontra la terza lamina')
+                            print('La particella non incontra l\'ultima lamina')
 
                             posizione_finale_x = posizione_finale_x + np.tan(theta) * (self.posizione_schermo_sensibile - lamina.posizione[1]) * np.cos(phi)
                                 
