@@ -76,7 +76,7 @@ class esperimento_Rutherford:
 
             for i in range(self.n_particelle): # "i" viene utilizzato solo per ripetere in ciclo tante volte quante sono le particelle considerate
                 
-                theta = np.random.uniform(0,2 * np.pi)
+                theta = np.random.uniform(0, 2 * np.pi)
                 
                 # Fisso un angolo di incidenza molto piccolo, in modo da avere un fascio collimato che non si disperda:
                 
@@ -203,7 +203,7 @@ class esperimento_Rutherford:
                         
                         # se la particella non incontra la lamina chiaramente non viene deviata (molto poco probabile se si pongono lamine vicine)
 
-                        if np.logical_and(posizione_finale[0] < -lamina.lunghezza / 2, posizione_finale[0] > lamina.lunghezza / 2):
+                        if np.logical_and(posizione_finale[0] < - lamina.lunghezza / 2, posizione_finale[0] > lamina.lunghezza / 2):
                             
                             print('La particella non incontra la seconda lamina')                     
 
@@ -486,11 +486,11 @@ class esperimento_Rutherford:
             
     def visualizza_apparato(self):
 
-        fig, ax = plt.subplots(figsize=(11, 7))
+        plt.figure(figsize= (11,7))
 
         # Plotta la posizione del foro di collimazione:
 
-        ax.plot(self.posizione_collimatore[0], self.posizione_collimatore[1], 'ro', label='Foro di collimazione')
+        plt.plot(self.posizione_collimatore[0], self.posizione_collimatore[1], 'ro', label='Foro di collimazione')
         
         # Plotta il cerchio del collimatore
 
@@ -499,7 +499,7 @@ class esperimento_Rutherford:
         x_cerchio = self.posizione_collimatore[0] + self.raggio_collimatore * np.cos(theta)
         y_cerchio = self.posizione_collimatore[1] + self.raggio_collimatore * np.sin(theta)
 
-        ax.plot(x_cerchio, y_cerchio, 'r--', label='Cerchio del collimatore')
+        plt.plot(x_cerchio, y_cerchio, 'r--', label='Cerchio del collimatore')
 
         # Plotta la posizione delle lamine di metallo
 
@@ -508,18 +508,18 @@ class esperimento_Rutherford:
             x = [lamina.posizione[0], lamina.posizione[0] + lamina.lunghezza] 
             y = [lamina.posizione[1], lamina.posizione[1]]
 
-            ax.plot(x, y, color='blue', label = f'Lamina di {lamina.materiale}')
+            plt.plot(x, y, color='blue', label = f'Lamina di {lamina.materiale}')
 
         # Plotta la posizione dello schermo sensibile
 
-        ax.plot(0, self.posizione_schermo_sensibile, 'g^', label='Schermo sensibile ')
+        plt.plot(0, self.posizione_schermo_sensibile, 'g^', label='Schermo sensibile ')
     
-        ax.set_xlabel('Posizione X (cm)')
-        ax.set_ylabel('Posizione Z (cm)')
-        ax.set_title('Apparato sperimentale Rutherford')
+        plt.xlabel('Posizione X (cm)')
+        plt.ylabel('Posizione Z (cm)')
+        plt.title('Apparato sperimentale Rutherford')
         
-        ax.legend()
-        ax.grid()
+        plt.legend()
+        plt.grid()
 
         plt.show()
 
