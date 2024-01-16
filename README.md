@@ -96,3 +96,5 @@ d) Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa tre lam
     prova4.simulazione()
 
 Quanto fatto per i punti precedenti può essere ripetuto con un minore numero di particelle, regolando chiaramente anche le dimensioni dello schermo di pixel. Se invece si vuole una migliore analisi statistica si consiglia di aumentare il numero di particelle, facendo attenzione alla rappresentazione delle tracce che potrebbe metterci un po' di tempo per essere eseguita.
+
+Link per la presentazione del progetto: https://www.canva.com/design/DAF3KmVsV78/uarHy-AeX6vse3UOIC6jeQ/view?utm_content=DAF3KmVsV78&utm_campaign=designshare&utm_medium=link&utm_source=editor
