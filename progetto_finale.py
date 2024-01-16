@@ -541,9 +541,9 @@ prova2 = esperimento_Rutherford(energia = 7.7, distanza_collimatore = 1, dimensi
                                 posizione_schermo_sensibile = 1.7, dimensioni_pixel = 0.0025,
                                 lamine_metallo = [lamina_metallo1], n_particelle = 5000, dimensione_schermo = 2)
 
-# prova2.visualizza_apparato()
+prova2.visualizza_apparato()
 
-# prova2.simulazione()
+prova2.simulazione()
 
 
 # Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa due lamine d'oro poste ad 1cm di distanza
@@ -555,9 +555,9 @@ prova3 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensi
                                 posizione_schermo_sensibile = 4, dimensioni_pixel = 0.0025,
                                 lamine_metallo = [lamina_metallo2,lamina_metallo3], n_particelle = 5000, dimensione_schermo = 2)
 
-# prova3.visualizza_apparato()
+prova3.visualizza_apparato()
 
-# prova3.simulazione()
+prova3.simulazione()
 
 # Particella alpha dal decadimento di 222Rn (E = 5.5MeV) che attraversa tre lamine d'oro poste ad 1mm di distanza
 
@@ -571,6 +571,6 @@ prova4 = esperimento_Rutherford(energia = 5.5, distanza_collimatore = 1, dimensi
                                 posizione_schermo_sensibile = 3, dimensioni_pixel = 0.0025,
                                 lamine_metallo = [lamina_metallo4,lamina_metallo5,lamina_metallo6], n_particelle = 5000, dimensione_schermo = 2)
 
-# prova4.visualizza_apparato()
+prova4.visualizza_apparato()
 
-# prova4.simulazione()
+prova4.simulazione()
